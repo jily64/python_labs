@@ -2,7 +2,6 @@ def find_first_index(s: str) -> int | None:
     for i in range(len(s)):
         if s[i].isupper():
             return i
-    return
 
 def find_step(capital_index: int, s: str) -> int | None:
     step = 0
@@ -10,7 +9,6 @@ def find_step(capital_index: int, s: str) -> int | None:
         step+=1
         if s[i].isdigit():
             return step
-    return
 
 def decrypt(s) -> str:
     capital_index = find_first_index(s)
