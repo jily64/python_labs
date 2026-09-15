@@ -1,17 +1,13 @@
-def matrix_checkup(mat: list[list[float | int]]) -> bool:
-    a = set([len(i) for i in mat])
-    if len(a) > 1:
-        return False
-    return True
+from src.lib.matrix import matrix_rows_checkup, IrregularMatrixException
 
 
 def transpose(mat: list[list[float | int]]) -> list[list[float | int]]:
-    if not matrix_checkup(mat=mat):
-        raise ValueError("Irregular matrix")
+    if not matrix_rows_checkup(mat=mat):
+        raise ValueError("Incorrect matrix")
     if len(mat) == 0:
         return []
 
-    a = [[] for i in range(len(mat[0]))]
+    a = [[] for _ in range(len(mat[0]))]
 
     for i in range(len(mat)):
         for j in range(len(mat[i])):
@@ -20,10 +16,58 @@ def transpose(mat: list[list[float | int]]) -> list[list[float | int]]:
     return a
 
 def row_sums(mat: list[list[float | int]]) -> list[float]:
-    if not matrix_checkup(mat=mat):
-        raise ValueError("Irregular matrix")
+    if not matrix_rows_checkup(mat=mat):
+        raise ValueError("Incorrect matrix")
     return [sum(i) for i in mat]
 
+def col_sums(mat: list[list[float | int]]) -> list[float]:
+    if not matrix_rows_checkup(mat=mat):
+            raise ValueError("Incorrect matrix")
+    return [sum(i) for i in transpose(mat)]
 
 if __name__ == "__main__":
-    print(row_sums([[1, 2, 3], [4, 5, 6]]))
+    """
+    transpose_tests = [
+        [[1, 2, 3]], 
+        [[1], [2], [3]], 
+        [[1, 2], [3, 4]],
+        [], 
+        [[1, 2], [3]]
+    ]
+        
+    for i in transpose_tests:
+        try:
+            print(i, "->", transpose(i))
+        except Exception as e:
+            print(i, "->", e, f"Тип ошибки: {type(e)}")
+    """
+    
+    """
+    row_sums_tests = [
+        [[1, 2, 3], [4, 5, 6]], 
+        [[-1, 1], [10, -10]], 
+        [[0, 0], [0, 0]],
+        [[1, 2], [3]]
+    ]
+        
+    for i in row_sums_tests:
+        try:
+            print(i, "->", row_sums(i))
+        except Exception as e:
+            print(i, "->", e, f"Тип ошибки: {type(e)}")
+    """      
+    
+    """
+    col_sums_tests = [
+        [[1, 2, 3], [4, 5, 6]], 
+        [[-1, 1], [10, -10]], 
+        [[0, 0], [0, 0]],
+        [[1, 2], [3]]
+    ]
+        
+    for i in col_sums_tests:
+        try:
+            print(i, "->", col_sums(i))
+        except Exception as e:
+            print(i, "->", e, f"Тип ошибки: {type(e)}")
+    """
