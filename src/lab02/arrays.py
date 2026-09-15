@@ -1,18 +1,40 @@
+"""
+Код для задания номер 1.
+"""
+
+
 def min_max(nums: list[float | int]) -> tuple[float | int, float | int]:
-    if not len(nums):
+    """
+    Возвращает кортеж из минимального и максимального.
+    
+    Ошибки:
+        ValueError: Если список пуст.
+    """
+    if not nums:
         raise ValueError("Array must have at least 1 element")
-    return (min(nums), max(nums))
+    return min(nums), max(nums)
+
 
 def unique_sorted(nums: list[float | int]) -> list[float | int]:
-    return list(sorted(set(nums)))
+    """
+    Возвращает список отсортированных, уникальных значений
+    """
+    return sorted(set(nums))
 
-# То, что надо сделать по ТЗ
+
 def flatten(mat: list[list | tuple]) -> list:
+    """
+    Раскрывает вложенные списки и кортежи и превращает все это дело в 1 список.
+    
+    Ошибки:
+        TypeError: Элементами входного списка могут быть только кортеж и список.
+    """
+    
     a = []
     for i in mat:
         if not isinstance(i, tuple) and not isinstance(i, list):
             raise TypeError("Matrix elements must be type of tuple or list.")
-        a+=i
+        a.extend(i)
     return a
 
 
@@ -23,12 +45,12 @@ def flatten_v2(mat: list[list | tuple | int | float]) -> list[float | int]:
     a = []
     for i in mat:
         data = i
-        if isinstance(i, list) or isinstance(i, tuple):
+        if isinstance(i, (list, tuple)):
             data = flatten_v2(list(i))
             a += data
             continue
         
-        if not isinstance(i, int) and not isinstance(i, float):
+        if not isinstance(i, (list, tuple)):
             raise TypeError("Array elements must be type of int or float.")
         
         a.append(i)

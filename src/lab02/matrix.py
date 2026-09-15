@@ -1,7 +1,18 @@
+"""
+Код для задания B.
+"""
+
+
 from src.lib.matrix import matrix_rows_checkup, IrregularMatrixException
 
 
 def transpose(mat: list[list[float | int]]) -> list[list[float | int]]:
+    """
+    Переворачивает матрицу.
+    
+    Ошибки:
+        ValueError: Неправильные размеры матрицы. (см. scr.lib.matrix)
+    """
     if not matrix_rows_checkup(mat=mat):
         raise ValueError("Incorrect matrix")
     if len(mat) == 0:
@@ -15,15 +26,30 @@ def transpose(mat: list[list[float | int]]) -> list[list[float | int]]:
 
     return a
 
+
 def row_sums(mat: list[list[float | int]]) -> list[float]:
+    """
+    Возвращает сумму строк матрицы.
+    
+    Ошибки:
+        ValueError: Неправильные размеры матрицы. (см. scr.lib.matrix)
+    """
     if not matrix_rows_checkup(mat=mat):
         raise ValueError("Incorrect matrix")
     return [sum(i) for i in mat]
 
+
 def col_sums(mat: list[list[float | int]]) -> list[float]:
+    """
+    Возвращает сумму столбцов матрицы.
+    
+    Ошибки:
+        ValueError: Неправильные размеры матрицы. (см. scr.lib.matrix)
+    """
     if not matrix_rows_checkup(mat=mat):
             raise ValueError("Incorrect matrix")
     return [sum(i) for i in transpose(mat)]
+
 
 if __name__ == "__main__":
     """
@@ -71,3 +97,4 @@ if __name__ == "__main__":
         except Exception as e:
             print(i, "->", e, f"Тип ошибки: {type(e)}")
     """
+    pass

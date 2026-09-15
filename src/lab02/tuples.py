@@ -61,3 +61,4 @@ if __name__ == "__main__":
             print(i, "->", format_record(i))
         except Exception as e:
             print(i, "->", e, f"Тип ошибки: {type(e)}")
+    
