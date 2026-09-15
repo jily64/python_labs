@@ -5,11 +5,11 @@ def matrix_rows_checkup(mat: list[list[float | int]]) -> bool:
     """    
     Делает проверку соответсвия длины строк в матрице.
     """
+    if not mat:
+        return True
     
-    a = set([len(i) for i in mat])
-    if len(a) > 1:
-        return False
-    return True
+    l = set([len(i) for i in mat])
+    return len(l) == 1
 
 
 # Здесь собраны остальные объекты, которые тоже относятся к матрицам.

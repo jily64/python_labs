@@ -15,7 +15,7 @@ def transpose(mat: list[list[float | int]]) -> list[list[float | int]]:
     """
     if not matrix_rows_checkup(mat=mat):
         raise ValueError("Incorrect matrix")
-    if len(mat) == 0:
+    if not mat:
         return []
 
     a = [[] for _ in range(len(mat[0]))]
@@ -23,7 +23,6 @@ def transpose(mat: list[list[float | int]]) -> list[list[float | int]]:
     for i in range(len(mat)):
         for j in range(len(mat[i])):
             a[j].append(mat[i][j])
-
     return a
 
 
