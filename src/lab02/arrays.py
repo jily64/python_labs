@@ -12,7 +12,7 @@ def min_max(nums: list[float | int]) -> tuple[float | int, float | int]:
     """
     if not nums:
         raise ValueError("Array must have at least 1 element")
-    return min(nums), max(nums)
+    return (min(nums), max(nums))
 
 
 def unique_sorted(nums: list[float | int]) -> list[float | int]:
