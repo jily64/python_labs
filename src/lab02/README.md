@@ -53,15 +53,21 @@ def min_max(nums: list[float | int]) -> tuple[float | int, float | int]:
 ![](../../images/lab02/arrays_minmax.png)
 
 ### 2) unique_sorted
-Превращаю список в множество, чтобы убрать повторяющиеся элементы, сортирую, перевожу обратно в список и возвращаю.
-
+Превращаю список в множество, чтобы убрать повторяющиеся элементы и возвращаю обратно в список. Потом произвожу сортировку пузырьком. Пробегаюсь по всему списку вторым циклом и сравниваю пары. Повторяю это сравнение, пока все не встанет на свои места. Затем просто возвращаю num_set
 Код:
 ```py
 def unique_sorted(nums: list[float | int]) -> list[float | int]:
     """
     Возвращает список отсортированных, уникальных значений
     """
-    return sorted(set(nums))
+    num_set = list(set(nums))
+
+    for i in range(len(num_set)):
+        for j in range(len(num_set) - 1 - i):
+            if num_set[j] > num_set[j + 1]:
+                num_set[j], num_set[j + 1] = num_set[j + 1], num_set[j]
+
+    return num_set
 ```
 
 Примеры запуска:

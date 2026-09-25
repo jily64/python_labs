@@ -41,7 +41,14 @@ def unique_sorted(nums: list[float | int]) -> list[float | int]:
     """
     Возвращает список отсортированных, уникальных значений
     """
-    return sorted(set(nums))
+    num_set = list(set(nums))
+
+    for i in range(len(num_set)):
+        for j in range(len(num_set) - 1 - i):
+            if num_set[j] > num_set[j + 1]:
+                num_set[j], num_set[j + 1] = num_set[j + 1], num_set[j]
+
+    return num_set
 
 
 def flatten(mat: list[list | tuple]) -> list:
@@ -80,7 +87,7 @@ def flatten_v2(mat: list[list | tuple | int | float]) -> list[float | int]:
     return a
 
 if __name__ == "__main__":
-    
+    """
     min_max_tests = [
         [3, -1, 5, 5, 0], 
         [-5, -2, -9], 
@@ -93,9 +100,9 @@ if __name__ == "__main__":
             print(i, "->", min_max(i))
         except Exception as e:
             print(i, "->", e, f"Тип ошибки: {type(e)}")
-    
-    
     """
+    
+    
     unique_sorted_tests = [
         [3, 1, 2, 1, 3],  
         [], 
@@ -108,7 +115,7 @@ if __name__ == "__main__":
             print(i, "->", unique_sorted(i))
         except Exception as e:
             print(i, "->", e, f"Тип ошибки: {type(e)}")
-    """  
+    
     
     """
     flatten_tests = [
