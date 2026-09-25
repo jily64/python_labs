@@ -24,20 +24,57 @@ def check_group(group: str) -> bool:
         return False
     return True
 
+def check_gpa(gpa):
+    """
+    Проверка GPA.
+    """
+    if gpa < 0 or gpa > 5:
+        return False
+    return True
+
 def format_record(rec: tuple[str, str, float]) -> str:
     """
         rec: tuple[fio: str, group: str, gpa: float] -> str
         
         Функция форматирования данных студента (или кого то еще) в строку вида:
         
-        "Фамилия И. О., гр. ГРУППА, GPA .2f"    
+        "Фамилия И. О., гр. ГРУППА, GPA .2f"
+
+        Ошибки:
+            TypeError:
+                rec must be tuple
+                rec must have 3 values
+                fio must be str
+                group must be str
+                gpa must be float
+
+            ValueError:
+                Incorrect FIO string. Minimal word count - 2. Maximum word count - 3.
+                Incorrect Group string. String length cant be less that 1 char.
+                GPA value out of range.
+
     """
+    # Type Checkers
+    if not isinstance(rec, tuple):
+        raise TypeError("rec must be tuple")
+    if len(rec) != 3:
+        raise TypeError("rec must have 3 values")
+    if not isinstance(rec[0], str):
+        raise TypeError("fio must be str")
+    if not isinstance(rec[1], str):
+        raise TypeError("group must be str")
+    if not isinstance(rec[2], float):
+        raise TypeError("gpa must be float")
+
     
     # Checkers
     if not check_fio(rec[0]):
         raise ValueError("Incorrect FIO string. Minimal word count - 2. Maximum word count - 3.")
     if not check_group(rec[1]):
         raise ValueError("Incorrect Group string. String length cant be less that 1 char.")
+    if not check_gpa(rec[2]):
+        raise ValueError("GPA value out of range.")
+
     
     # Formatting
     unwrapped_fio = fio_string_unwrapper(rec[0])
@@ -54,6 +91,7 @@ if __name__ == "__main__":
         ("  сидорова  анна   сергеевна ", "ABB-01", 3.999),
         ("       ", "BIVT", 123.001),
         ("Олег Олегович Монгол", "    ", 123.001),
+        ("Олег Олегович Монгол", "OOOO", 10),
     ]
         
     for i in format_record_tests:

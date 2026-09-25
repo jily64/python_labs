@@ -3,7 +3,7 @@
 """
 
 
-def min_max(nums: list[float | int]) -> tuple[float | int, float | int]:
+def _min_max_old(nums: list[float | int]) -> tuple[float | int, float | int]:
     """
     Возвращает кортеж из минимального и максимального.
     
@@ -13,6 +13,28 @@ def min_max(nums: list[float | int]) -> tuple[float | int, float | int]:
     if not nums:
         raise ValueError("Array must have at least 1 element")
     return (min(nums), max(nums))
+
+
+def min_max(nums: list[float | int]) -> tuple[float | int, float | int]:
+    """
+        Возвращает кортеж из минимального и максимального.
+        
+        Ошибки:
+            ValueError: Если список пуст.
+    """
+    if not nums:
+        raise ValueError("Array must have at least 1 element")
+
+    n_min = 2**31
+    n_max = -(2**31)
+
+    for i in nums:
+        if i > n_max:
+            n_max = i
+        if i < n_min:
+            n_min = i
+
+    return (n_min, n_max)
 
 
 def unique_sorted(nums: list[float | int]) -> list[float | int]:
@@ -58,7 +80,7 @@ def flatten_v2(mat: list[list | tuple | int | float]) -> list[float | int]:
     return a
 
 if __name__ == "__main__":
-    """
+    
     min_max_tests = [
         [3, -1, 5, 5, 0], 
         [-5, -2, -9], 
@@ -71,7 +93,7 @@ if __name__ == "__main__":
             print(i, "->", min_max(i))
         except Exception as e:
             print(i, "->", e, f"Тип ошибки: {type(e)}")
-    """
+    
     
     """
     unique_sorted_tests = [
