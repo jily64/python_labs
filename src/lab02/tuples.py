@@ -54,6 +54,11 @@ def format_record(rec: tuple[str, str, float]) -> str:
                 GPA value out of range.
 
     """
+    # Tuple out of range
+    if len(rec) != 3:
+        raise ValueError("rec must have 3 values")
+
+
     # Type Checkers
     if not isinstance(rec, tuple):
         raise TypeError("rec must be tuple")
