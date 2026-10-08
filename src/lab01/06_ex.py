@@ -1,4 +1,4 @@
-n = int(input("N: "))
+n = int(input("in_1: "))
 
 out = {
     "True": 0,
@@ -6,7 +6,7 @@ out = {
 }
 
 for i in range(n):
-    inp = input(f"in_{i+1}: ").split()
+    inp = input(f"in_{i+2}: ").split()
     
     if len(inp) != 4:
         continue

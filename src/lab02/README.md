@@ -23,19 +23,76 @@
 ## Задание 1
 
 ### 1) min_max
-Проверяет список на наличие как минимум 1 элемента и затем прочто через встроенные функции питона min и max возвращает соответсвующие значения.
+Создаем n_min и n_max. Циклом пробегаем по всему списку и ищем числа, которые меньше н_мин и больше н_макс и записываем их. Потом возвращаем кортеж.
+
+Код:
+```py
+def min_max(nums: list[float | int]) -> tuple[float | int, float | int]:
+    """
+        Возвращает кортеж из минимального и максимального.
+        
+        Ошибки:
+            ValueError: Если список пуст.
+    """
+    if not nums:
+        raise ValueError("Array must have at least 1 element")
+
+    n_min = 2**31
+    n_max = -(2**31)
+
+    for i in nums:
+        if i > n_max:
+            n_max = i
+        if i < n_min:
+            n_min = i
+
+    return (n_min, n_max)
+```
 
 Примеры запуска:
 ![](../../images/lab02/arrays_minmax.png)
 
 ### 2) unique_sorted
-Превращаю список в множество, чтобы убрать повторяющиеся элементы, сортирую, перевожу обратно в список и возвращаю.
+Превращаю список в множество, чтобы убрать повторяющиеся элементы и возвращаю обратно в список. Потом произвожу сортировку пузырьком. Пробегаюсь по всему списку вторым циклом и сравниваю пары. Повторяю это сравнение, пока все не встанет на свои места. Затем просто возвращаю num_set
+Код:
+```py
+def unique_sorted(nums: list[float | int]) -> list[float | int]:
+    """
+    Возвращает список отсортированных, уникальных значений
+    """
+    num_set = list(set(nums))
+
+    for i in range(len(num_set)):
+        for j in range(len(num_set) - 1 - i):
+            if num_set[j] > num_set[j + 1]:
+                num_set[j], num_set[j + 1] = num_set[j + 1], num_set[j]
+
+    return num_set
+```
 
 Примеры запуска:
 ![](../../images/lab02/arrays_uniquesorted.png)
 
 ### 3) flatten
 Пробегаюсь по списку фором и делаю 2 вещи: проверяю список ли это и добавляю все значения в список "a", который собственно и является ответом.
+
+Код:
+```py
+def flatten(mat: list[list | tuple]) -> list:
+    """
+    Раскрывает вложенные списки и кортежи и превращает все это дело в 1 список.
+    
+    Ошибки:
+        TypeError: Элементами входного списка могут быть только кортеж и список.
+    """
+    
+    a = []
+    for i in mat:
+        if not isinstance(i, tuple) and not isinstance(i, list):
+            raise TypeError("Matrix elements must be type of tuple or list.")
+        a.extend(i)
+    return a
+```
 
 Примеры запуска:
 ![](../../images/lab02/arrays_flatten.png)
@@ -47,17 +104,67 @@
 ### 1) transpose
 Проверяю, что матрица не сломанная, проверяю ее размер. Затем создаю новый шаблон при помощи генератора. Затем просто с помощью цикла записываю все первые элементы в список, затем вторые и так до конца.
 
+Код:
+```py
+def transpose(mat: list[list[float | int]]) -> list[list[float | int]]:
+    """
+    Переворачивает матрицу.
+    
+    Ошибки:
+        ValueError: Неправильные размеры матрицы. (см. scr.lib.matrix)
+    """
+    if not matrix_rows_checkup(mat=mat):
+        raise ValueError("Incorrect matrix")
+    if not mat:
+        return []
+
+    a = [[] for _ in range(len(mat[0]))]
+
+    for i in range(len(mat)):
+        for j in range(len(mat[i])):
+            a[j].append(mat[i][j])
+    return a
+```
+
 Примеры запуска:
 ![](../../images/lab02/matrix_transpose.png)
 
 ### 2) row_sums
 Пробегаюсь генератором по строкам и с помощью sum считаю сумму.
 
+Код:
+```py
+def row_sums(mat: list[list[float | int]]) -> list[float]:
+    """
+    Возвращает сумму строк матрицы.
+    
+    Ошибки:
+        ValueError: Неправильные размеры матрицы. (см. scr.lib.matrix)
+    """
+    if not matrix_rows_checkup(mat=mat):
+        raise ValueError("Incorrect matrix")
+    return [sum(i) for i in mat]
+```
+
 Примеры запуска:
 ![](../../images/lab02/matrix_rowsum.png)
 
 ### 3) col_sums
 То же самое, что и с row_sums, но перед суммированием переворачиваю матрицу с помощью transpose, который был написан ранее.
+
+Код:
+```py
+def col_sums(mat: list[list[float | int]]) -> list[float]:
+    """
+    Возвращает сумму столбцов матрицы.
+    
+    Ошибки:
+        ValueError: Неправильные размеры матрицы. (см. scr.lib.matrix)
+    """
+    if not matrix_rows_checkup(mat=mat):
+            raise ValueError("Incorrect matrix")
+    return [sum(i) for i in transpose(mat)]
+```
 
 Примеры запуска:
 ![](../../images/lab02/matrix_colsums.png)
@@ -73,11 +180,17 @@
 
 3. check_group - То же самое, что и с check_fio, только с группой. Просто проверяет длину строки, предварительно убрав лишние пробелы.
 
+4. check_gpa - Проверяет находится ли GPA в диапазоне от 0 до 5
+
 И теперь основная функция format_record.
+
+Сначала проверяем длину кортежа, чтобы сами проверки не упали с IndexError.
 
 Первый блок Checkers отвечает за проверку всех (ФИО и группу) значений на адекватность и правльность. В противном случае возвращает ValueError с подписью, что именно было передано неправльно.
 
 Второй блок Formatting выполняет все остальный действия. Сначало создает final_fio, где удаляет все пробелы и собирает готовую строку имени. В общем делает все, что написано в пункте 1, но скоращает все слова, кроме первого, до 1 буквы. Затем просто форматирую строку под требования описанные в ТЗ и возвращаю.
+
+Код слишком большой, чтобы вставлять его сюда. Код можно найти здесь: [Код](../lab02/tuples.py)
 
 Примеры запуска (В конце добавил 2 теста от себя):
 ![](../../images/lab02/tuples_formatrecoerd.png)
