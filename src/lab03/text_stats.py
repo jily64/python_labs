@@ -11,7 +11,7 @@ if __name__ == "__main__":
     
     stdin_text = sys.stdin.read()
     
-    normalized_text = normalize(stdin_text, casefold=True, yo2e=True)
+    normalized_text = normalize(stdin_text)
     tokens = tokenize(normalized_text)
     freq_dict = count_freq(tokens)
     top_words = top_n(freq_dict, n=5)

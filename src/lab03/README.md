@@ -21,7 +21,7 @@
 ## normalize
 
 ```py
-def normalize(text: str, *, casefold: bool = False, yo2e: bool = True) -> str:
+def normalize(text: str, *, casefold: bool = True, yo2e: bool = True) -> str:
     """
     Функция для нормализации текста. Первые 2 ифа переводят текст (в зависимости от выбраного метода) и меняет ё на е.
     

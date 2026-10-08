@@ -1,7 +1,7 @@
 import re, unicodedata
 
 
-def normalize(text: str, *, casefold: bool = False, yo2e: bool = True) -> str:
+def normalize(text: str, *, casefold: bool = True, yo2e: bool = True) -> str:
     """
     Функция для нормализации текста. Первые 2 ифа переводят текст (в зависимости от выбраного метода) и меняет ё на е.
     
@@ -19,7 +19,7 @@ def normalize(text: str, *, casefold: bool = False, yo2e: bool = True) -> str:
         text = text.lower()
     
     if yo2e:
-        text = re.sub(r"ё", "е", text)
+        text = re.sub(r"[ёЁ]", "е", text)
     
     return " ".join(re.sub(r"[\x00-\x1F\x7F]", " ", text).split())
 
