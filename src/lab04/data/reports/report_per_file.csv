@@ -1,0 +1,11 @@
+file,word,count
+src/lab04/data/tests/report_test.txt,non,9
+src/lab04/data/tests/report_test.txt,ac,8
+src/lab04/data/tests/report_test.txt,elit,7
+src/lab04/data/tests/report_test.txt,vitae,7
+src/lab04/data/tests/report_test.txt,massa,6
+src/lab04/data/tests/report_test2.txt,non,9
+src/lab04/data/tests/report_test2.txt,ac,8
+src/lab04/data/tests/report_test2.txt,elit,7
+src/lab04/data/tests/report_test2.txt,vitae,7
+src/lab04/data/tests/report_test2.txt,massa,6
