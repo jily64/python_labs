@@ -42,8 +42,28 @@ def json_to_csv(json_path: str, csv_path: str) -> None:
 
 
 def csv_to_json(csv_path: str, json_path: str) -> None:
-    pass
+    try:
+        # Reader
+        with open(csv_path, "r", encoding="utf-8") as f:
+            data = list(csv.DictReader(f, strict=True))
 
+        # Checkers
+        if len(data)<=1:
+            raise ValueError("Not enought values in .csv. File must have at least  2 rows (Header + 1 data row)")
+        check_headers(data)
 
+        # Writers
+        with open(json_path, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4, ensure_ascii=True)
+
+    # Errors proceeder
+    except FileNotFoundError as e:
+        raise FileNotFoundError("Cant find file to read.")
+    except JSONDecodeError as e:
+        raise ValueError("Cant decode .json file")
+    except Exception as e:
+        raise e
+ 
 if __name__ == "__main__":
-    json_to_csv("src/lab05/data/people.json", "src/lab05/data/people.csv")
+    csv_to_json("src/lab05/data/people.csv", "src/lab05/data/people.json")
+    
