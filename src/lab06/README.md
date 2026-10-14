@@ -1,7 +1,25 @@
 # Lab06
 
 # FastTravel
-
+1. [Важные обновления](#важные-обновления)
+2. [cli_text](#cli_text)
+    1. [cat_command](#cat_command)
+        1. [Стандартный запуск](#стандартный-запуск)
+        2. [С -n](#с--n)
+        3. [--help](#--help)
+        4. [param error](#param-error)
+    2. [stats](#stats)
+        1. [Стандартный запуск](#стандартный-запуск-1)
+        2. [С --top](#с---top)
+        3. [--help](#--help-1)
+        4. [param error](#param-error-1)
+3. [cli_convert](#cli_convert)
+    1. [json2csv](#json2csv)
+    2. [csv2json](#csv2json)
+    3. [csv2xlsx](#csv2xlsx)
+    4. [--help](#--help-2)
+    5. [param error](#param-error-2)
+4. [data/out](#dataout)
 
 
 # Важные обновления
