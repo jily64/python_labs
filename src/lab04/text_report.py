@@ -121,6 +121,5 @@ if __name__ == "__main__":
                 print(create_table(header=("file", "word", "count"), rows=result))
                 
             elif proc_id == 2:
-                write_csv(rows=result, path=total_out, header=("word", "count")) # type: ignore        
-                print(create_table(header=("word", "count"), rows=result)) # type: ignore
-                    
+                write_csv(rows=result, path=total_out, header=("word", "count"))    
+                print(create_table(header=("word", "count"), rows=result))
