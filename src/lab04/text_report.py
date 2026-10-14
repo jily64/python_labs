@@ -12,8 +12,6 @@ def args_parser(args: list[str]) -> dict[str, list[str]]:
     """
     Небольшой анвраппер аргументов. Есть список слов, которые он ищет. Все, что стоит после ключевых слов, записывает в словарик
     """
-    
-    
     res = {}
     previous_keyword = None
     
@@ -40,14 +38,9 @@ def report_for_each(files: list[str], output: str, texts: list[str], queue: Queu
     try:
         results = []
         for text_ind in range(len(texts)):
-            text_data = top_n(count_freq(tokenize(texts[text_ind])), n=5)
-            results+=[[files[text_ind]]+list(text_data[i]) for i in range(len(text_data))]       
-        
-        write_csv(results, path=output, header=("file", "word", "count"))
-        
-        print(create_table(header=("file", "word", "count"), rows=results))
-        
-        queue.put((1, True))
+            text_data = top_n(count_freq(tokenize(texts[text_ind])), n=-1)
+            results+=[[files[text_ind]]+list(text_data[i]) for i in range(len(text_data))]               
+        queue.put((1, results))
         
     except Exception as e:
         queue.put((1, e))
@@ -57,17 +50,13 @@ def report_for_all(output: str, text: list[str], queue: Queue):
     """
     Функция считает топ слов по всем файлам, записывает в .csv и генерит табличку.
     
-    Трай тут чисто для дебага, так как функция не может выдать ошибку как таковая. (На тайп игноры тоже не смотрите, просто Pylance надоел ругаться)
+    Трай тут чисто для дебага, так как функция не может выдать ошибку как таковая
     """
     
     # Process internal ID - 2 
     try:
-        results = list(top_n(count_freq(tokenize("\n".join(text))), n=5))
-        write_csv(rows=results, path=output, header=("word", "count")) # type: ignore
-        
-        print(create_table(header=("word", "count"), rows=results)) # type: ignore
-        
-        queue.put((2, True))
+        results = list(top_n(count_freq(tokenize("\n".join(text))), n=-1))
+        queue.put((2, results))
 
     except Exception as e:
         queue.put((2, e))
@@ -116,14 +105,22 @@ if __name__ == "__main__":
     each_process.join()
     all_process.join()
     
-    statuses = {}
+    data = {}
     for _ in range(2):
-      proc_id, status = queue.get()
-      statuses[proc_id] = status
+        proc_id, result = queue.get()
+        data[proc_id] = result
 
-    for proc_id, status in statuses.items():
-      if isinstance(status, BaseException):
-        print(f"Error in process with ID {proc_id}")
-        raise status
-    
-    
+    for proc_id, result in data.items():
+        if isinstance(result, BaseException):
+            print(f"Error in process with ID {proc_id}")
+            raise result
+
+        else:
+            if proc_id == 1:
+                write_csv(result, path=per_file_out, header=("file", "word", "count"))
+                print(create_table(header=("file", "word", "count"), rows=result))
+                
+            elif proc_id == 2:
+                write_csv(rows=result, path=total_out, header=("word", "count")) # type: ignore        
+                print(create_table(header=("word", "count"), rows=result)) # type: ignore
+                    
