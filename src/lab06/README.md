@@ -112,7 +112,7 @@ def read_text_by_lines(path: str | Path, encoding: str = "utf-8"):
 ![](../../images/lab06/json2csv.png)
 
 ## csv2json
-![](../../images/lab06/csv2josn.png)
+![](../../images/lab06/csv2json.png)
 
 ## csv2xlsx
 ![](../../images/lab06/csv2xlsx.png)
