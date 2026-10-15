@@ -8,10 +8,10 @@ if __name__ == "__main__":
     """
     Тут толком описывать нечего
     """
-    
+
     parser = argparse.ArgumentParser(description="Конвертеры данных")
     sub = parser.add_subparsers(dest="command")
-    
+
     p1 = sub.add_parser("json2csv")
     p1.add_argument("--in", dest="input", required=True, help="Input file direction")
     p1.add_argument("--out", dest="output", required=True, help="Output file direction")
@@ -32,5 +32,5 @@ if __name__ == "__main__":
         csv_to_json(args.input, args.output)
     if args.command == "csv2xlsx":
         csv_to_xlsx(args.input, args.output)
-        
+
     print(f"Converted successfully!\nOutput: {Path(args.output).absolute()}")

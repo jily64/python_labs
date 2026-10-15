@@ -2,14 +2,13 @@
 Код для задания B.
 """
 
-
 from src.lib.matrix import matrix_rows_checkup, IrregularMatrixException
 
 
 def transpose(mat: list[list[float | int]]) -> list[list[float | int]]:
     """
     Переворачивает матрицу.
-    
+
     Ошибки:
         ValueError: Неправильные размеры матрицы. (см. scr.lib.matrix)
     """
@@ -29,7 +28,7 @@ def transpose(mat: list[list[float | int]]) -> list[list[float | int]]:
 def row_sums(mat: list[list[float | int]]) -> list[float]:
     """
     Возвращает сумму строк матрицы.
-    
+
     Ошибки:
         ValueError: Неправильные размеры матрицы. (см. scr.lib.matrix)
     """
@@ -41,32 +40,32 @@ def row_sums(mat: list[list[float | int]]) -> list[float]:
 def col_sums(mat: list[list[float | int]]) -> list[float]:
     """
     Возвращает сумму столбцов матрицы.
-    
+
     Ошибки:
         ValueError: Неправильные размеры матрицы. (см. scr.lib.matrix)
     """
     if not matrix_rows_checkup(mat=mat):
-            raise ValueError("Incorrect matrix")
+        raise ValueError("Incorrect matrix")
     return [sum(i) for i in transpose(mat)]
 
 
 if __name__ == "__main__":
     """
     transpose_tests = [
-        [[1, 2, 3]], 
-        [[1], [2], [3]], 
+        [[1, 2, 3]],
+        [[1], [2], [3]],
         [[1, 2], [3, 4]],
-        [], 
+        [],
         [[1, 2], [3]]
     ]
-        
+
     for i in transpose_tests:
         try:
             print(i, "->", transpose(i))
         except Exception as e:
             print(i, "->", e, f"Тип ошибки: {type(e)}")
     """
-    
+
     """
     row_sums_tests = [
         [[1, 2, 3], [4, 5, 6]], 
@@ -80,8 +79,8 @@ if __name__ == "__main__":
             print(i, "->", row_sums(i))
         except Exception as e:
             print(i, "->", e, f"Тип ошибки: {type(e)}")
-    """      
-    
+    """
+
     """
     col_sums_tests = [
         [[1, 2, 3], [4, 5, 6]], 

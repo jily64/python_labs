@@ -18,16 +18,16 @@ def check_headers(data: list[dict]):
 def json_to_csv(json_path: str, csv_path: str) -> None:
     """
     Конвертер json в csv.
-    
+
     Открывает файл с json, читает его. Затем идут проверки (блок Checkers). Там мы проверяем данные на валидность.
     Затем через стандартный DictWriter в библиотеке csv записываю снова в файл.
-    
-    Отдельно ищу все поля, которые могу встретиться. Если в json отсутвует то или иное поле, то врайтер не упадет. 
-    
+
+    Отдельно ищу все поля, которые могу встретиться. Если в json отсутвует то или иное поле, то врайтер не упадет.
+
     Отдельно есть блок для обработки ошибок. Он ловит ошибку файл не найден и ошибку чтения json отдельно и выводит кастомные ValueError.
     Все остальные ошибки идут через последний блок, который просто рейзит ошибку
     """
-    
+
     try:
         # Reader
         with open(json_path, "r", encoding="utf-8") as f:
@@ -46,8 +46,8 @@ def json_to_csv(json_path: str, csv_path: str) -> None:
         all_keys = set()
         for row in data:
             all_keys.update(row.keys())
-        
-        headers = sorted(list(all_keys))      
+
+        headers = sorted(list(all_keys))
         with open(csv_path, "w", newline="", encoding="utf-8") as f:
             writer = csv.DictWriter(f, fieldnames=headers, extrasaction="ignore")
             writer.writeheader()
@@ -68,26 +68,26 @@ def csv_to_json(csv_path: str, json_path: str) -> None:
     Читаем данные через диктридер, передав в него определенный диалект.
     Отдельно проверяем, что данные (кол-во столбцов и их имена) совпадают.
     Записываем через json.dump
-    
+
     Обработчик ошибок отлавливает только отсутствующий файл, а все остальные ошибки кидает напрямую.
     """
-    
+
     try:
         # Reader
         with open(csv_path, "r", encoding="utf-8") as f:
             sample = f.read(2048)
             f.seek(0)
-            
+
             sniffer = csv.Sniffer()
             dialect = sniffer.sniff(sample)
 
             # Header Checker
             if not sniffer.has_header(sample):
                 raise ValueError(".csv must have headers")
-            
+
             # Data Loader
             data = list(csv.DictReader(f, dialect=dialect))
-            
+
         # Data and structure checkers
         if len(data) == 0:
             raise ValueError(".csv must have a least 1 data row")
@@ -102,13 +102,14 @@ def csv_to_json(csv_path: str, json_path: str) -> None:
         raise FileNotFoundError("Cant find file to read.")
     except Exception as e:
         raise e
- 
+
+
 if __name__ == "__main__":
     sample_json = "data/samples/people.json"
     out_csv = "data/out/people_from_json.csv"
     out_json = "data/out/people_from_csv.json"
-    
-    print("="*60)
+
+    print("=" * 60)
 
     try:
         # --------------------------------
@@ -126,7 +127,7 @@ if __name__ == "__main__":
         print(f" -> Zapisi JSON: {initial_json_len}")
         print(f" -> Zapisi CSV: {resulting_csv_len}")
 
-        assert (initial_json_len == resulting_csv_len), "Erorr"
+        assert initial_json_len == resulting_csv_len, "Erorr"
         print(" Success")
         print("-" * 60)
 
@@ -142,10 +143,9 @@ if __name__ == "__main__":
         print(f" -> Zapisi CSV: {resulting_csv_len}")
         print(f" -> Zapisi JSON: {final_json_len}")
 
-        assert (resulting_csv_len == final_json_len), "Erorr"
+        assert resulting_csv_len == final_json_len, "Erorr"
         print(" Success")
         print("=" * 60)
 
     except Exception as e:
         print(f"\nOh no! Erorr: {e}")
-    
