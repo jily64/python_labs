@@ -16,7 +16,7 @@ def test_normalize(text, casefold, yo2e, expected):
 
 
 @pytest.mark.parametrize(
-    "text, expectded",
+    "text, expected",
     [
         ("привет мир", ["привет", "мир"]),
         ("hello,world!!!", ["hello", "world"]),
@@ -25,8 +25,8 @@ def test_normalize(text, casefold, yo2e, expected):
         ("emoji 😀 не слово", ["emoji", "не", "слово"]),
     ],
 )
-def test_tokenize(text, expectded):
-    assert tokenize(text=text) == expectded
+def test_tokenize(text, expected):
+    assert tokenize(text=text) == expected
 
 
 @pytest.mark.parametrize(
