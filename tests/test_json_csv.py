@@ -2,15 +2,21 @@ import pytest
 from src.lib.json_csv import json_to_csv, csv_to_json
 
 import json, csv, openpyxl
+from pathlib import Path
 
+@pytest.fixture
+def tmp_path():
+    return "./tests/data/"
 
 def test_json_to_csv_roundtrip(tmp_path: Path):
-    src = tmp_path / "people.json"
-    dst = tmp_path / "people.csv"
+    src = Path(tmp_path + "people.json")
+    dst = Path(tmp_path + "people_from_json.csv")
     data = [
         {"name": "Alice", "age": 22},
         {"name": "Bob", "age": 25},
     ]
+
+
     src.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
     json_to_csv(str(src), str(dst))
 
@@ -20,21 +26,24 @@ def test_json_to_csv_roundtrip(tmp_path: Path):
     assert len(rows) == 2
     assert {"name", "age"} <= set(rows[0].keys())
 
-    print("Test 1: JSON -> CSV")
-    with open(src, "r", encoding="utf-8") as f:
-        initial_json_len = len(json.load(f))
+def test_csv_to_json_roundtrip(tmp_path: Path):
+    src = Path(tmp_path + "people.csv")
+    dst = Path(tmp_path + "people_from_csv.json")
+    data = '''
+    name,age
+    alice,22
+    bob,25
+    '''
 
-    json_to_csv(src, dst)
 
-    with open(dst, "r", encoding="utf-8") as f:
-        resulting_csv_len = len(f.readlines()) - 1
+    src.write_text(data, encoding="utf-8")
+    csv_to_json(str(src), str(dst))
 
-    print(f" -> Zapisi JSON: {initial_json_len}")
-    print(f" -> Zapisi CSV: {resulting_csv_len}")
+    with dst.open(encoding="utf-8") as f:
+        rows = json.load(f)
 
-    assert initial_json_len == resulting_csv_len, "Erorr"
-    print(" Success")
-    print("-" * 60)
+    assert len(rows) == 2
+    assert {"name", "age"} <= set(rows[0].keys())
 
 
 def test_csv_to_json_roundtrip(tmp_path: Path):
